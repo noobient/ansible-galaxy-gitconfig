@@ -1,7 +1,7 @@
 ---
 - name: Check Git config file
   command:
-    cmd: git config --list --show-scope
+    cmd: git config --list --show-origin
   register: list_options
 
 - debug:
