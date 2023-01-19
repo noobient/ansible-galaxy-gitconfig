@@ -1,0 +1,28 @@
+---
+- hosts: 127.0.0.1
+  tasks:
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      vars:
+        name: 'user.name'
+        value: 'Stewie Griffin'
+
+    - include_tasks: check.yml
+
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      vars:
+        name: 'user.name'
+        value: 'Jane Doe'
+        conflict: 'Stewie Griffin'
+
+    - include_tasks: check.yml
+
+    - include_role:
+        name: "{{ playbook_dir.split('/')[:-1] | last }}"
+      vars:
+        name: 'user.name'
+        value: 'Jane Doe'
+        scope: 'global'
+
+    - include_tasks: check.yml

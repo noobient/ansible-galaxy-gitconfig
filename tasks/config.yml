@@ -1,0 +1,26 @@
+---
+- name: Install Git
+  package:
+    name: git
+    state: latest
+  register: installed_git
+  when: installed_git is not defined
+
+- name: "Check {{ scope }} value of \"{{ name }}\"" # noqa command-instead-of-module
+  command:
+    cmd: "git config --{{ scope }} --get {{ name | quote }}"
+  failed_when: false
+  changed_when: false
+  register: current_value
+
+- name: "Set {{ scope }} value of \"{{ name }}\" to \"{{ value }}\"" # noqa command-instead-of-module
+  command:
+    cmd: "git config --{{ scope }} {{ name | quote }} {{ value | quote }}"
+  when: (value != current_value.stdout) and (conflict is not defined)
+
+# Don't override if some blocker value is specified.
+# E.g. don't set to cache when GCM4ML is in use already.
+- name: "Set {{ scope }} value of \"{{ name }}\" to \"{{ value }}\"" # noqa command-instead-of-module
+  command:
+    cmd: "git config --{{ scope }} {{ name | quote }} {{ value | quote }}"
+  when: (value != current_value.stdout) and (conflict is defined) and (conflict != current_value.stdout)

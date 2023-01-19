@@ -1,0 +1,8 @@
+---
+- name: Check Git config file
+  command:
+    cmd: git config --list --show-scope
+  register: list_options
+
+- debug:
+    msg: "{{ list_options.stdout_lines | replace('\\t', ' : ') }}"
