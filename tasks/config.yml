@@ -13,14 +13,14 @@
   changed_when: false
   register: current_value
 
-- name: "Set {{ scope }} value of \"{{ name }}\" to \"{{ value }}\"" # noqa command-instead-of-module
+- name: "Set {{ scope }} value of \"{{ name }}\" to \"{{ value }}\"" # noqa command-instead-of-module no-changed-when
   command:
     cmd: "git config --{{ scope }} {{ name | quote }} {{ value | quote }}"
   when: (value != current_value.stdout) and (conflict is not defined)
 
 # Don't override if some blocker value is specified.
 # E.g. don't set to cache when GCM4ML is in use already.
-- name: "Set {{ scope }} value of \"{{ name }}\" to \"{{ value }}\"" # noqa command-instead-of-module
+- name: "Set {{ scope }} value of \"{{ name }}\" to \"{{ value }}\"" # noqa command-instead-of-module no-changed-when
   command:
     cmd: "git config --{{ scope }} {{ name | quote }} {{ value | quote }}"
   when: (value != current_value.stdout) and (conflict is defined) and (conflict != current_value.stdout)

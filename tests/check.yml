@@ -1,7 +1,8 @@
 ---
-- name: Check Git config file
+- name: Check Git config file # noqa command-instead-of-module
   command:
     cmd: git config --list --show-origin
+  changed_when: false
   register: list_options
 
 - debug:
