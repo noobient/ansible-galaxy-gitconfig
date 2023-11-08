@@ -17,13 +17,13 @@ This role lets you set Git config options.
 
 ```yml
 - include_role:
-    name: bviktor.gitconfig
+    name: noobient.gitconfig
   vars:
     name: 'user.name'
     value: 'Stewie Griffin'
 
 - include_role:
-    name: bviktor.gitconfig
+    name: noobient.gitconfig
   vars:
     name: 'user.name'
     value: 'Eric Cartman'
